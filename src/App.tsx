@@ -57,7 +57,7 @@ function App() {
         }
       }
     }
-    function drawElements(figure: Figure) {
+    function drawElement(figure: Figure) {
       if (!ctx) return;
       if (figure.type === 'rectangle' && figure.height) {
         ctx.fillStyle = figure.color;
@@ -98,9 +98,9 @@ function App() {
       type: 'circle',
     });
 
-    drawElements(player1);
-    drawElements(player2);
-    drawElements(bullet);
+    drawElement(player1);
+    drawElement(player2);
+    drawElement(bullet);
 
     return () => {
       if (!canvasRef.current) return;
