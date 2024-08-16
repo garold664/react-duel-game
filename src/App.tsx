@@ -73,11 +73,13 @@ function App() {
       }
     }
 
-    function displayScore(score: number, player: 'player1' | 'player2') {
+    async function displayScore(score: number, player: 'player1' | 'player2') {
+      await document.fonts.ready;
       if (!ctx) return;
       const x =
         player === 'player1' ? CANVAS_WIDTH / 2 + 100 : CANVAS_WIDTH / 2 - 100;
-      ctx.font = '30px Arial';
+      ctx.font = "30px 'Pixelify Sans'";
+      console.log(ctx.font);
       ctx.fillStyle = 'white';
       ctx.fillText(`${score}`, x, 30);
     }
@@ -127,6 +129,7 @@ function App() {
 
   return (
     <>
+      <h1>React Duel Game</h1>
       <canvas
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
