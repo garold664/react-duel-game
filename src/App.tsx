@@ -100,8 +100,22 @@ function App() {
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
+    function movePlayer(player: Figure) {
+      // if (player.y > 0 && player.y < CANVAS_HEIGHT - PLAYER_RADIUS) {
+      if (
+        player.y > CANVAS_HEIGHT - PLAYER_RADIUS ||
+        player.y < 0 + PLAYER_RADIUS
+      ) {
+        player.speed = player.speed * -1;
+      }
+      player.y += player.speed;
+      // }
+    }
+
     function loop() {
       drawElements();
+      movePlayer(player1);
+      movePlayer(player2);
       window.requestAnimationFrame(loop);
     }
 
