@@ -78,7 +78,17 @@ function App() {
       type: 'circle',
     });
 
+    const player2 = new Figure({
+      x: CANVAS_WIDTH - PLAYER_RADIUS - 5,
+      y: CANVAS_HEIGHT - 100,
+      width: PLAYER_RADIUS * 2,
+      color: PLAYER2_COLOR,
+      speed: 5,
+      type: 'circle',
+    });
+
     drawElements(player1);
+    drawElements(player2);
 
     return () => {
       if (!canvasRef.current) return;
