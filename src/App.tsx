@@ -30,6 +30,8 @@ type FigureOptions = Circle | Rect;
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const player1Score = useRef(0);
+  const player2Score = useRef(0);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -71,6 +73,15 @@ function App() {
       }
     }
 
+    function displayScore(score: number, player: 'player1' | 'player2') {
+      if (!ctx) return;
+      const x =
+        player === 'player1' ? CANVAS_WIDTH / 2 + 100 : CANVAS_WIDTH / 2 - 100;
+      ctx.font = '30px Arial';
+      ctx.fillStyle = 'white';
+      ctx.fillText(`${score}`, x, 30);
+    }
+
     const player1 = new Figure({
       x: PLAYER_RADIUS + 5,
       y: 100,
@@ -101,6 +112,9 @@ function App() {
     drawElement(player1);
     drawElement(player2);
     drawElement(bullet);
+
+    displayScore(player1Score.current, 'player1');
+    displayScore(player2Score.current, 'player2');
 
     return () => {
       if (!canvasRef.current) return;
