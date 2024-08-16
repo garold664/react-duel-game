@@ -6,6 +6,8 @@ const CANVAS_HEIGHT = 600;
 const PLAYER_RADIUS = 25;
 const PLAYER1_COLOR = '#f04500';
 const PLAYER2_COLOR = '#00f0f0';
+const BULLET_RADIUS = 5;
+const BULLET_COLOR = '#f0f0f0';
 
 interface Circle {
   x: number;
@@ -87,8 +89,18 @@ function App() {
       type: 'circle',
     });
 
+    const bullet = new Figure({
+      x: CANVAS_WIDTH / 2 - BULLET_RADIUS,
+      y: CANVAS_HEIGHT / 2 - BULLET_RADIUS,
+      width: BULLET_RADIUS * 2,
+      color: BULLET_COLOR,
+      speed: 5,
+      type: 'circle',
+    });
+
     drawElements(player1);
     drawElements(player2);
+    drawElements(bullet);
 
     return () => {
       if (!canvasRef.current) return;
