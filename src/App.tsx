@@ -84,6 +84,27 @@ function App() {
       ctx.fillText(`${score}`, x, 30);
     }
 
+    function drawElements() {
+      clearRect(ctx);
+
+      drawElement(player1);
+      drawElement(player2);
+      drawElement(bullet);
+
+      displayScore(player1Score.current, 'player1');
+      displayScore(player2Score.current, 'player2');
+    }
+
+    function clearRect(ctx: CanvasRenderingContext2D | null) {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
+
+    function loop() {
+      drawElements();
+      window.requestAnimationFrame(loop);
+    }
+
     const player1 = new Figure({
       x: PLAYER_RADIUS + 5,
       y: 100,
@@ -111,19 +132,13 @@ function App() {
       type: 'circle',
     });
 
-    drawElement(player1);
-    drawElement(player2);
-    drawElement(bullet);
-
-    displayScore(player1Score.current, 'player1');
-    displayScore(player2Score.current, 'player2');
+    loop();
 
     return () => {
       if (!canvasRef.current) return;
       const currentCanvas = canvasRef.current;
       const ctx = currentCanvas.getContext('2d');
-      if (!ctx) return;
-      ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
+      clearRect(ctx);
     };
   }, []);
 
