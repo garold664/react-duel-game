@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react';
 import './App.css';
 
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
 const PLAYER_RADIUS = 25;
 const PLAYER1_COLOR = '#f04500';
+const PLAYER2_COLOR = '#00f0f0';
 
 interface Circle {
   x: number;
@@ -89,8 +92,8 @@ function App() {
   return (
     <>
       <canvas
-        width={800}
-        height={800}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
         className="border border-primary-200 rounded-lg"
         ref={canvasRef}
       ></canvas>
