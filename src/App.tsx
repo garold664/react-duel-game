@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
@@ -28,7 +28,7 @@ function App() {
   const bullets = useRef<Bullet[]>([]);
   const bullet1Color = useRef(BULLET_COLOR1);
   const bullet2Color = useRef(BULLET_COLOR2);
-
+  const [isMenuShown, setIsMenuShown] = useState(false);
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
@@ -80,11 +80,13 @@ function App() {
   return (
     <>
       <h1>React Duel Game</h1>
+      {isMenuShown && <div>Menu</div>}
       <canvas
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
         className="border border-primary-200 rounded-lg"
         ref={canvasRef}
+        onClick={() => setIsMenuShown(!isMenuShown)}
       ></canvas>
     </>
   );
