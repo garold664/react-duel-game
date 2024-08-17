@@ -15,6 +15,7 @@ import movePlayer from './helpers/movePlayer';
 import drawElements from './helpers/drawElements';
 import clearRect from './helpers/clearRect';
 import showMenu from './helpers/showMenu';
+import Menu from './components/Menu';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -85,20 +86,12 @@ function App() {
     <>
       <h1>React Duel Game</h1>
       {isMenuShown && (
-        <div>
-          {`Menu for ${currentPlayer}`}
-          <input
-            type="color"
-            onChange={(e) => {
-              if (currentPlayer === 'player1') {
-                bullet1Color.current = e.target.value;
-              } else {
-                bullet2Color.current = e.target.value;
-              }
-            }}
-          />
-          <button onClick={() => setIsMenuShown(false)}>X</button>
-        </div>
+        <Menu
+          setIsMenuShown={setIsMenuShown}
+          currentPlayer={currentPlayer}
+          bullet1Color={bullet1Color}
+          bullet2Color={bullet2Color}
+        />
       )}
       <canvas
         width={CANVAS_WIDTH}
