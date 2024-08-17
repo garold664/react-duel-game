@@ -93,6 +93,11 @@ function App() {
           currentPlayer={currentPlayer === 'player1' ? player1 : player2}
           bullet1Color={bullet1Color}
           bullet2Color={bullet2Color}
+          shootingRate={
+            currentPlayer === 'player1'
+              ? player1ShootingRate
+              : player2ShootingRate
+          }
         />
       )}
       <canvas

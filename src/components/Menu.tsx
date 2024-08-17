@@ -6,6 +6,7 @@ interface MenuProps {
   currentPlayer: Figure;
   bullet1Color: React.MutableRefObject<string>;
   bullet2Color: React.MutableRefObject<string>;
+  shootingRate: React.MutableRefObject<number>;
 }
 
 export default function Menu({
@@ -13,8 +14,10 @@ export default function Menu({
   currentPlayer,
   bullet1Color,
   bullet2Color,
+  shootingRate,
 }: MenuProps) {
   const [playerSpeed, setPlayerSpeed] = useState(Math.abs(currentPlayer.speed));
+  const [shootRate, setShootRate] = useState(Math.abs(shootingRate.current));
   console.log('playerSpeed: ', playerSpeed);
   console.dir(currentPlayer);
   return (
@@ -35,7 +38,7 @@ export default function Menu({
           }
         }}
       />
-      <div>
+      <div className="flex gap-4 py-6">
         <label>speed:</label>
         <input
           type="range"
@@ -50,6 +53,21 @@ export default function Menu({
           }}
         />
         <span>{playerSpeed}</span>
+      </div>
+      <div className="flex gap-4 py-6">
+        <label>shooting rate:</label>
+        <input
+          type="range"
+          min={0}
+          max={30}
+          // defaultValue={currentPlayer.speed}
+          value={shootRate}
+          onChange={(e) => {
+            shootingRate.current = Number(e.target.value);
+            setShootRate(Number(e.target.value));
+          }}
+        />
+        <span>{shootRate}</span>
       </div>
       <button onClick={() => setIsMenuShown(false)}>X</button>
     </div>
