@@ -8,6 +8,7 @@ const PLAYER1_COLOR = '#f04500';
 const PLAYER2_COLOR = '#00f0f0';
 const BULLET_RADIUS = 5;
 const BULLET_COLOR = '#f0f0f0';
+const BULLET_SPEED = 5;
 
 interface Circle {
   x: number;
@@ -28,37 +29,42 @@ interface Rect {
 }
 type FigureOptions = Circle | Rect;
 
+class Figure {
+  x: number;
+  y: number;
+  width: number;
+  height?: number;
+  color: string;
+  speed: number;
+  type: 'rectangle' | 'circle';
+
+  constructor(options: FigureOptions) {
+    this.x = options.x;
+    this.y = options.y;
+    this.width = options.width;
+    this.color = options.color;
+    this.speed = options.speed;
+    this.type = options.type;
+
+    if (options.type === 'rectangle') {
+      this.height = options.height;
+    }
+  }
+}
+
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const start = useRef<number | undefined>();
   const player1Score = useRef(0);
   const player2Score = useRef(0);
 
+  const gameFrame = useRef(0);
+  const bullets = useRef<Figure[]>([]);
+
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
-    class Figure {
-      x: number;
-      y: number;
-      width: number;
-      height?: number;
-      color: string;
-      speed: number;
-      type: 'rectangle' | 'circle';
 
-      constructor(options: FigureOptions) {
-        this.x = options.x;
-        this.y = options.y;
-        this.width = options.width;
-        this.color = options.color;
-        this.speed = options.speed;
-        this.type = options.type;
-
-        if (options.type === 'rectangle') {
-          this.height = options.height;
-        }
-      }
-    }
     function drawElement(figure: Figure) {
       if (!ctx) return;
       if (figure.type === 'rectangle' && figure.height) {
@@ -86,7 +92,7 @@ function App() {
     function drawElements() {
       clearRect(ctx);
 
-      drawElement(bullet);
+      // drawElement(bullet);
       drawElement(player1);
       drawElement(player2);
 
@@ -111,17 +117,33 @@ function App() {
       // }
     }
 
-    function moveBullet(bullet: Figure, elapsed: number) {
-      bullet.y = player1.y;
-      // if (elapsed > 999) {
-      // }
-      bullet.x += bullet.speed;
-      // console.log(bullet.y);
-
-      if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
-        bullet.y = player1.y;
-        bullet.x = player1.x;
+    function moveBullet(elapsed: number) {
+      gameFrame.current = Math.floor((gameFrame.current + 1) % 120);
+      if (gameFrame.current === 1) {
+        const bullet = new Figure({
+          x: player1.x,
+          y: player1.y,
+          width: BULLET_RADIUS * 2,
+          color: BULLET_COLOR,
+          speed: BULLET_SPEED,
+          type: 'circle',
+        });
+        bullets.current.push(bullet);
+        console.log(bullets.current);
+        drawElement(bullet);
       }
+      bullets.current.forEach((bullet, i) => {
+        // bullet.y = player1.y;
+        bullet.x += bullet.speed;
+        drawElement(bullet);
+        // console.log(bullet.x, i);
+
+        if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
+          bullets.current.shift();
+          // bullet.y = player1.y;
+          // bullet.x = player1.x;
+        }
+      });
     }
 
     function loop(timeStamp: number) {
@@ -129,7 +151,7 @@ function App() {
         start.current = timeStamp;
       }
       const elapsed = timeStamp - start.current;
-      console.log(elapsed);
+      // console.log(elapsed);
       if (elapsed > 1000) {
         start.current = timeStamp;
       }
@@ -137,7 +159,7 @@ function App() {
       drawElements();
       movePlayer(player1);
       movePlayer(player2);
-      moveBullet(bullet, elapsed);
+      moveBullet(elapsed);
       window.requestAnimationFrame(loop);
     }
 
@@ -146,7 +168,7 @@ function App() {
       y: 100,
       width: PLAYER_RADIUS * 2,
       color: PLAYER1_COLOR,
-      speed: 1,
+      speed: 5,
       type: 'circle',
     });
 
@@ -159,14 +181,16 @@ function App() {
       type: 'circle',
     });
 
-    const bullet = new Figure({
-      x: 0 - BULLET_RADIUS * 2,
-      y: CANVAS_HEIGHT / 2 - BULLET_RADIUS,
-      width: BULLET_RADIUS * 2,
-      color: BULLET_COLOR,
-      speed: 5,
-      type: 'circle',
-    });
+    // const bullet = new Figure({
+    //   x: 0 - BULLET_RADIUS * 2,
+    //   y: CANVAS_HEIGHT / 2 - BULLET_RADIUS,
+    //   width: BULLET_RADIUS * 2,
+    //   color: BULLET_COLOR,
+    //   speed: 5,
+    //   type: 'circle',
+    // });
+
+    // bullets.current.push(bullet);
 
     loop(0);
 
