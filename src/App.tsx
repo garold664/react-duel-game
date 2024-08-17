@@ -7,8 +7,10 @@ const PLAYER_RADIUS = 25;
 const PLAYER1_COLOR = '#f04500';
 const PLAYER2_COLOR = '#00f0f0';
 const BULLET_RADIUS = 10;
-const BULLET_COLOR = '#f0f0f0';
-const BULLET_SPEED = 5;
+const BULLET_COLOR1 = '#ff0000';
+const BULLET_COLOR2 = '#8000ff';
+const BULLET_SPEED1 = 5;
+const BULLET_SPEED2 = 0;
 const INITIAL_BULLET_RATE = 10;
 
 interface Circle {
@@ -80,6 +82,8 @@ function App() {
   const gameFrame1 = useRef(0);
   const gameFrame2 = useRef(1);
   const bullets = useRef<Bullet[]>([]);
+  const bullet1Color = useRef(BULLET_COLOR1);
+  const bullet2Color = useRef(BULLET_COLOR2);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -103,7 +107,7 @@ function App() {
       await document.fonts.ready;
       if (!ctx) return;
       const x =
-        player === 'player1' ? CANVAS_WIDTH / 2 + 100 : CANVAS_WIDTH / 2 - 100;
+        player === 'player1' ? CANVAS_WIDTH / 2 - 100 : CANVAS_WIDTH / 2 + 100;
       ctx.font = "30px 'Pixelify Sans'";
       ctx.fillStyle = 'white';
       ctx.fillText(`${score}`, x, 30);
@@ -145,15 +149,9 @@ function App() {
       const player = playerName === 'player1' ? player1 : player2;
       const enemy = playerName === 'player1' ? player2 : player1;
 
-      // if (playerName === 'player1') {
       gameFrame.current = Math.floor(
         (gameFrame.current + 1) % (1000 / shootingRate)
       );
-      // } else {
-      // gameFrame2.current = Math.floor(
-      //   (gameFrame2.current + 1) % (1000 / shootingRate)
-      // );
-      // }
 
       if (gameFrame.current === 1) {
         console.log('playerName: ', playerName);
@@ -162,8 +160,11 @@ function App() {
           x: player.x,
           y: player.y,
           width: BULLET_RADIUS * 2,
-          color: BULLET_COLOR,
-          speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
+          color:
+            playerName === 'player1'
+              ? bullet1Color.current
+              : bullet2Color.current,
+          speed: playerName === 'player1' ? BULLET_SPEED1 : -BULLET_SPEED2,
           type: 'circle',
           id: Date.now(),
         });
@@ -172,25 +173,7 @@ function App() {
         drawElement(bullet);
       }
 
-      // if (gameFrame2.current === 1) {
-      //   console.log('playerName: ', playerName);
-      //   const bullet = new Bullet({
-      //     name: 'bullet' + playerName,
-      //     x: player.x,
-      //     y: player.y,
-      //     width: BULLET_RADIUS * 2,
-      //     color: BULLET_COLOR,
-      //     speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
-      //     type: 'circle',
-      //     id: Date.now(),
-      //   });
-      //   bullets.current.push(bullet);
-      //   console.log(bullets.current);
-      //   drawElement(bullet);
-      // }
-
       bullets.current.forEach((bullet) => {
-        // bullet.y = player1.y;
         bullet.x += bullet.speed;
         drawElement(bullet);
         // console.log(bullet.x, i);
@@ -218,6 +201,7 @@ function App() {
           !bullet.name.endsWith(enemy.name)
         ) {
           if (playerName === 'player1') {
+            console.log('hit: ', playerName);
             player1Score.current++;
           } else {
             player2Score.current++;
