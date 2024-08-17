@@ -14,7 +14,9 @@ export default function Menu({
   bullet1Color,
   bullet2Color,
 }: MenuProps) {
-  const [playerSpeed, setPlayerSpeed] = useState(currentPlayer.speed);
+  const [playerSpeed, setPlayerSpeed] = useState(Math.abs(currentPlayer.speed));
+  console.log('playerSpeed: ', playerSpeed);
+  console.dir(currentPlayer);
   return (
     <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 backdrop-blur-md border-primary-500 border-4 rounded-xl flex  flex-col justify-center items-center bg-primary-900/35 shadow-lg shadow-primary-900">
       <h2>{`Menu for ${currentPlayer.name}`}</h2>

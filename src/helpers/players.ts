@@ -12,7 +12,7 @@ export const player1 = new Figure({
   y: 100,
   width: PLAYER_RADIUS * 2,
   color: PLAYER1_COLOR,
-  speed: 1,
+  speed: 2,
   type: 'circle',
 });
 
@@ -22,6 +22,6 @@ export const player2 = new Figure({
   y: 100,
   width: PLAYER_RADIUS * 2,
   color: PLAYER2_COLOR,
-  speed: 1,
+  speed: 2,
   type: 'circle',
 });

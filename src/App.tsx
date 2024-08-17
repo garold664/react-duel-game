@@ -88,6 +88,7 @@ function App() {
       <h1>React Duel Game</h1>
       {isMenuShown && (
         <Menu
+          key={currentPlayer}
           setIsMenuShown={setIsMenuShown}
           currentPlayer={currentPlayer === 'player1' ? player1 : player2}
           bullet1Color={bullet1Color}
