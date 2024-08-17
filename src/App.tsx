@@ -14,6 +14,7 @@ import moveBullet from './helpers/moveBullet';
 import movePlayer from './helpers/movePlayer';
 import drawElements from './helpers/drawElements';
 import clearRect from './helpers/clearRect';
+import toggleMenu from './helpers/toggleMenu';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,6 +30,7 @@ function App() {
   const bullet1Color = useRef(BULLET_COLOR1);
   const bullet2Color = useRef(BULLET_COLOR2);
   const [isMenuShown, setIsMenuShown] = useState(false);
+  const [currentPlayer, setCurrentPlayer] = useState('player1');
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
@@ -80,13 +82,13 @@ function App() {
   return (
     <>
       <h1>React Duel Game</h1>
-      {isMenuShown && <div>Menu</div>}
+      {isMenuShown && <div>{`Menu for ${currentPlayer}`}</div>}
       <canvas
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
         className="border border-primary-200 rounded-lg"
         ref={canvasRef}
-        onClick={() => setIsMenuShown(!isMenuShown)}
+        onClick={toggleMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
       ></canvas>
     </>
   );
