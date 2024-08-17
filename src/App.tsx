@@ -57,6 +57,7 @@ function App() {
   const start = useRef<number | undefined>();
   const player1Score = useRef(0);
   const player2Score = useRef(0);
+  const player1ShootingRate = useRef(10);
 
   const gameFrame = useRef(0);
   const bullets = useRef<Figure[]>([]);
@@ -117,8 +118,10 @@ function App() {
       // }
     }
 
-    function moveBullet(elapsed: number) {
-      gameFrame.current = Math.floor((gameFrame.current + 1) % 120);
+    function moveBullet(shootingRate: number) {
+      gameFrame.current = Math.floor(
+        (gameFrame.current + 1) % (1000 / shootingRate)
+      );
       if (gameFrame.current === 1) {
         const bullet = new Figure({
           x: player1.x,
@@ -159,7 +162,7 @@ function App() {
       drawElements();
       movePlayer(player1);
       movePlayer(player2);
-      moveBullet(elapsed);
+      moveBullet(player1ShootingRate.current);
       window.requestAnimationFrame(loop);
     }
 
@@ -180,17 +183,6 @@ function App() {
       speed: 5,
       type: 'circle',
     });
-
-    // const bullet = new Figure({
-    //   x: 0 - BULLET_RADIUS * 2,
-    //   y: CANVAS_HEIGHT / 2 - BULLET_RADIUS,
-    //   width: BULLET_RADIUS * 2,
-    //   color: BULLET_COLOR,
-    //   speed: 5,
-    //   type: 'circle',
-    // });
-
-    // bullets.current.push(bullet);
 
     loop(0);
 
