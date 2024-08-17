@@ -6,9 +6,10 @@ const CANVAS_HEIGHT = 600;
 const PLAYER_RADIUS = 25;
 const PLAYER1_COLOR = '#f04500';
 const PLAYER2_COLOR = '#00f0f0';
-const BULLET_RADIUS = 5;
+const BULLET_RADIUS = 10;
 const BULLET_COLOR = '#f0f0f0';
 const BULLET_SPEED = 5;
+const INITIAL_BULLET_RATE = 10;
 
 interface Circle {
   x: number;
@@ -57,7 +58,7 @@ function App() {
   const start = useRef<number | undefined>();
   const player1Score = useRef(0);
   const player2Score = useRef(0);
-  const player1ShootingRate = useRef(10);
+  const player1ShootingRate = useRef(INITIAL_BULLET_RATE);
 
   const gameFrame = useRef(0);
   const bullets = useRef<Figure[]>([]);
@@ -143,8 +144,16 @@ function App() {
 
         if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
           bullets.current.shift();
-          // bullet.y = player1.y;
-          // bullet.x = player1.x;
+        }
+
+        if (
+          bullet.x + BULLET_RADIUS > player2.x - PLAYER_RADIUS &&
+          bullet.x - BULLET_RADIUS < player2.x + PLAYER_RADIUS &&
+          bullet.y + BULLET_RADIUS > player2.y - PLAYER_RADIUS &&
+          bullet.y - BULLET_RADIUS < player2.y + PLAYER_RADIUS
+        ) {
+          bullets.current.shift();
+          player2Score.current++;
         }
       });
     }
@@ -160,9 +169,9 @@ function App() {
       }
       // const shift = Math.min(elapsed / 10, 200);
       drawElements();
+      moveBullet(player1ShootingRate.current);
       movePlayer(player1);
       movePlayer(player2);
-      moveBullet(player1ShootingRate.current);
       window.requestAnimationFrame(loop);
     }
 
@@ -177,7 +186,7 @@ function App() {
 
     const player2 = new Figure({
       x: CANVAS_WIDTH - PLAYER_RADIUS - 5,
-      y: CANVAS_HEIGHT - 100,
+      y: 130,
       width: PLAYER_RADIUS * 2,
       color: PLAYER2_COLOR,
       speed: 5,
