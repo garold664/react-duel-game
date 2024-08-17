@@ -10,7 +10,7 @@ const BULLET_RADIUS = 10;
 const BULLET_COLOR1 = '#ff0000';
 const BULLET_COLOR2 = '#8000ff';
 const BULLET_SPEED1 = 5;
-const BULLET_SPEED2 = 0;
+const BULLET_SPEED2 = 5;
 const INITIAL_BULLET_RATE = 10;
 
 interface Circle {
@@ -109,7 +109,7 @@ function App() {
       const x =
         player === 'player1' ? CANVAS_WIDTH / 2 - 100 : CANVAS_WIDTH / 2 + 100;
       ctx.font = "30px 'Pixelify Sans'";
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = player === 'player1' ? PLAYER1_COLOR : PLAYER2_COLOR;
       ctx.fillText(`${score}`, x, 30);
     }
 
