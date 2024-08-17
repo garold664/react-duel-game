@@ -89,7 +89,7 @@ function App() {
       {isMenuShown && (
         <Menu
           setIsMenuShown={setIsMenuShown}
-          currentPlayer={currentPlayer}
+          currentPlayer={currentPlayer === 'player1' ? player1 : player2}
           bullet1Color={bullet1Color}
           bullet2Color={bullet2Color}
         />
