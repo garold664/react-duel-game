@@ -82,7 +82,12 @@ function App() {
   return (
     <>
       <h1>React Duel Game</h1>
-      {isMenuShown && <div>{`Menu for ${currentPlayer}`}</div>}
+      {isMenuShown && (
+        <div>
+          {`Menu for ${currentPlayer}`}{' '}
+          <button onClick={() => setIsMenuShown(false)}>X</button>
+        </div>
+      )}
       <canvas
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
