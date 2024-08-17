@@ -13,31 +13,6 @@ const BULLET_SPEED1 = 5;
 const BULLET_SPEED2 = 5;
 const INITIAL_BULLET_RATE = 10;
 
-interface Circle {
-  x: number;
-  y: number;
-  width: number;
-  color: string;
-  speed: number;
-  type: 'circle';
-  name: string;
-}
-interface Rect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  color: string;
-  speed: number;
-  type: 'rectangle';
-  name: string;
-}
-type FigureOptions = Circle | Rect;
-
-type BulletOptions = FigureOptions & {
-  id: number;
-};
-
 class Figure {
   x: number;
   y: number;
@@ -130,7 +105,6 @@ function App() {
     }
 
     function movePlayer(player: Figure) {
-      // if (player.y > 0 && player.y < CANVAS_HEIGHT - PLAYER_RADIUS) {
       if (
         player.y > CANVAS_HEIGHT - PLAYER_RADIUS ||
         player.y < 0 + PLAYER_RADIUS
@@ -247,7 +221,7 @@ function App() {
       y: 100,
       width: PLAYER_RADIUS * 2,
       color: PLAYER2_COLOR,
-      speed: 0,
+      speed: 5,
       type: 'circle',
     });
 
