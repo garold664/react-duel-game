@@ -30,13 +30,13 @@ type FigureOptions = Circle | Rect;
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const start = useRef<number | undefined>();
   const player1Score = useRef(0);
   const player2Score = useRef(0);
 
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
-
     class Figure {
       x: number;
       y: number;
@@ -79,7 +79,6 @@ function App() {
       const x =
         player === 'player1' ? CANVAS_WIDTH / 2 + 100 : CANVAS_WIDTH / 2 - 100;
       ctx.font = "30px 'Pixelify Sans'";
-      console.log(ctx.font);
       ctx.fillStyle = 'white';
       ctx.fillText(`${score}`, x, 30);
     }
@@ -87,9 +86,9 @@ function App() {
     function drawElements() {
       clearRect(ctx);
 
+      drawElement(bullet);
       drawElement(player1);
       drawElement(player2);
-      drawElement(bullet);
 
       displayScore(player1Score.current, 'player1');
       displayScore(player2Score.current, 'player2');
@@ -112,10 +111,33 @@ function App() {
       // }
     }
 
-    function loop() {
+    function moveBullet(bullet: Figure, elapsed: number) {
+      bullet.y = player1.y;
+      // if (elapsed > 999) {
+      // }
+      bullet.x += bullet.speed;
+      // console.log(bullet.y);
+
+      if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
+        bullet.y = player1.y;
+        bullet.x = player1.x;
+      }
+    }
+
+    function loop(timeStamp: number) {
+      if (start.current === undefined) {
+        start.current = timeStamp;
+      }
+      const elapsed = timeStamp - start.current;
+      console.log(elapsed);
+      if (elapsed > 1000) {
+        start.current = timeStamp;
+      }
+      // const shift = Math.min(elapsed / 10, 200);
       drawElements();
       movePlayer(player1);
       movePlayer(player2);
+      moveBullet(bullet, elapsed);
       window.requestAnimationFrame(loop);
     }
 
@@ -124,7 +146,7 @@ function App() {
       y: 100,
       width: PLAYER_RADIUS * 2,
       color: PLAYER1_COLOR,
-      speed: 5,
+      speed: 1,
       type: 'circle',
     });
 
@@ -138,7 +160,7 @@ function App() {
     });
 
     const bullet = new Figure({
-      x: CANVAS_WIDTH / 2 - BULLET_RADIUS,
+      x: 0 - BULLET_RADIUS * 2,
       y: CANVAS_HEIGHT / 2 - BULLET_RADIUS,
       width: BULLET_RADIUS * 2,
       color: BULLET_COLOR,
@@ -146,7 +168,7 @@ function App() {
       type: 'circle',
     });
 
-    loop();
+    loop(0);
 
     return () => {
       if (!canvasRef.current) return;
