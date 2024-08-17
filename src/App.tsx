@@ -139,54 +139,56 @@ function App() {
 
     function moveBullet(
       shootingRate: number,
-      playerName: 'player1' | 'player2'
+      playerName: 'player1' | 'player2',
+      gameFrame: React.MutableRefObject<number>
     ) {
       const player = playerName === 'player1' ? player1 : player2;
       const enemy = playerName === 'player1' ? player2 : player1;
 
-      if (playerName === 'player1') {
-        gameFrame1.current = Math.floor(
-          (gameFrame1.current + 1) % (1000 / shootingRate)
-        );
+      // if (playerName === 'player1') {
+      gameFrame.current = Math.floor(
+        (gameFrame.current + 1) % (1000 / shootingRate)
+      );
+      // } else {
+      // gameFrame2.current = Math.floor(
+      //   (gameFrame2.current + 1) % (1000 / shootingRate)
+      // );
+      // }
 
-        if (gameFrame1.current === 1) {
-          console.log('playerName: ', playerName);
-          const bullet = new Bullet({
-            name: 'bullet' + playerName,
-            x: player.x,
-            y: player.y,
-            width: BULLET_RADIUS * 2,
-            color: BULLET_COLOR,
-            speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
-            type: 'circle',
-            id: Date.now(),
-          });
-          bullets.current.push(bullet);
-          console.log(bullets.current);
-          drawElement(bullet);
-        }
-      } else {
-        gameFrame2.current = Math.floor(
-          (gameFrame2.current + 1) % (1000 / shootingRate)
-        );
-
-        if (gameFrame2.current === 1) {
-          console.log('playerName: ', playerName);
-          const bullet = new Bullet({
-            name: 'bullet' + playerName,
-            x: player.x,
-            y: player.y,
-            width: BULLET_RADIUS * 2,
-            color: BULLET_COLOR,
-            speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
-            type: 'circle',
-            id: Date.now(),
-          });
-          bullets.current.push(bullet);
-          console.log(bullets.current);
-          drawElement(bullet);
-        }
+      if (gameFrame.current === 1) {
+        console.log('playerName: ', playerName);
+        const bullet = new Bullet({
+          name: 'bullet' + playerName,
+          x: player.x,
+          y: player.y,
+          width: BULLET_RADIUS * 2,
+          color: BULLET_COLOR,
+          speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
+          type: 'circle',
+          id: Date.now(),
+        });
+        bullets.current.push(bullet);
+        console.log(bullets.current);
+        drawElement(bullet);
       }
+
+      // if (gameFrame2.current === 1) {
+      //   console.log('playerName: ', playerName);
+      //   const bullet = new Bullet({
+      //     name: 'bullet' + playerName,
+      //     x: player.x,
+      //     y: player.y,
+      //     width: BULLET_RADIUS * 2,
+      //     color: BULLET_COLOR,
+      //     speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
+      //     type: 'circle',
+      //     id: Date.now(),
+      //   });
+      //   bullets.current.push(bullet);
+      //   console.log(bullets.current);
+      //   drawElement(bullet);
+      // }
+
       bullets.current.forEach((bullet) => {
         // bullet.y = player1.y;
         bullet.x += bullet.speed;
@@ -238,8 +240,8 @@ function App() {
       }
       // const shift = Math.min(elapsed / 10, 200);
       drawElements();
-      moveBullet(player2ShootingRate.current, 'player2');
-      moveBullet(player1ShootingRate.current, 'player1');
+      moveBullet(player2ShootingRate.current, 'player2', gameFrame1);
+      moveBullet(player1ShootingRate.current, 'player1', gameFrame2);
       movePlayer(player1);
       movePlayer(player2);
       window.requestAnimationFrame(loop);
