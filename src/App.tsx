@@ -18,6 +18,7 @@ interface Circle {
   color: string;
   speed: number;
   type: 'circle';
+  name: string;
 }
 interface Rect {
   x: number;
@@ -27,8 +28,13 @@ interface Rect {
   color: string;
   speed: number;
   type: 'rectangle';
+  name: string;
 }
 type FigureOptions = Circle | Rect;
+
+type BulletOptions = FigureOptions & {
+  id: number;
+};
 
 class Figure {
   x: number;
@@ -38,6 +44,7 @@ class Figure {
   color: string;
   speed: number;
   type: 'rectangle' | 'circle';
+  name: string;
 
   constructor(options: FigureOptions) {
     this.x = options.x;
@@ -46,10 +53,19 @@ class Figure {
     this.color = options.color;
     this.speed = options.speed;
     this.type = options.type;
+    this.name = options.name;
 
     if (options.type === 'rectangle') {
       this.height = options.height;
     }
+  }
+}
+
+class Bullet extends Figure {
+  id: number;
+  constructor(options: BulletOptions) {
+    super(options);
+    this.id = options.id;
   }
 }
 
@@ -59,9 +75,11 @@ function App() {
   const player1Score = useRef(0);
   const player2Score = useRef(0);
   const player1ShootingRate = useRef(INITIAL_BULLET_RATE);
+  const player2ShootingRate = useRef(INITIAL_BULLET_RATE);
 
-  const gameFrame = useRef(0);
-  const bullets = useRef<Figure[]>([]);
+  const gameFrame1 = useRef(0);
+  const gameFrame2 = useRef(1);
+  const bullets = useRef<Bullet[]>([]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -119,41 +137,92 @@ function App() {
       // }
     }
 
-    function moveBullet(shootingRate: number) {
-      gameFrame.current = Math.floor(
-        (gameFrame.current + 1) % (1000 / shootingRate)
-      );
-      if (gameFrame.current === 1) {
-        const bullet = new Figure({
-          x: player1.x,
-          y: player1.y,
-          width: BULLET_RADIUS * 2,
-          color: BULLET_COLOR,
-          speed: BULLET_SPEED,
-          type: 'circle',
-        });
-        bullets.current.push(bullet);
-        console.log(bullets.current);
-        drawElement(bullet);
+    function moveBullet(
+      shootingRate: number,
+      playerName: 'player1' | 'player2'
+    ) {
+      const player = playerName === 'player1' ? player1 : player2;
+      const enemy = playerName === 'player1' ? player2 : player1;
+
+      if (playerName === 'player1') {
+        gameFrame1.current = Math.floor(
+          (gameFrame1.current + 1) % (1000 / shootingRate)
+        );
+
+        if (gameFrame1.current === 1) {
+          console.log('playerName: ', playerName);
+          const bullet = new Bullet({
+            name: 'bullet' + playerName,
+            x: player.x,
+            y: player.y,
+            width: BULLET_RADIUS * 2,
+            color: BULLET_COLOR,
+            speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
+            type: 'circle',
+            id: Date.now(),
+          });
+          bullets.current.push(bullet);
+          console.log(bullets.current);
+          drawElement(bullet);
+        }
+      } else {
+        gameFrame2.current = Math.floor(
+          (gameFrame2.current + 1) % (1000 / shootingRate)
+        );
+
+        if (gameFrame2.current === 1) {
+          console.log('playerName: ', playerName);
+          const bullet = new Bullet({
+            name: 'bullet' + playerName,
+            x: player.x,
+            y: player.y,
+            width: BULLET_RADIUS * 2,
+            color: BULLET_COLOR,
+            speed: playerName === 'player1' ? BULLET_SPEED : -BULLET_SPEED,
+            type: 'circle',
+            id: Date.now(),
+          });
+          bullets.current.push(bullet);
+          console.log(bullets.current);
+          drawElement(bullet);
+        }
       }
-      bullets.current.forEach((bullet, i) => {
+      bullets.current.forEach((bullet) => {
         // bullet.y = player1.y;
         bullet.x += bullet.speed;
         drawElement(bullet);
         // console.log(bullet.x, i);
-
-        if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
-          bullets.current.shift();
+        if (playerName === 'player1') {
+          if (bullet.x > CANVAS_WIDTH - BULLET_RADIUS) {
+            // console.log('end: ', playerName);
+            bullets.current = bullets.current.filter(
+              (item) => item.id !== bullet.id
+            );
+          }
+        } else {
+          if (bullet.x - BULLET_RADIUS < 0) {
+            // console.log('end: ', playerName);
+            bullets.current = bullets.current.filter(
+              (item) => item.id !== bullet.id
+            );
+          }
         }
 
         if (
-          bullet.x + BULLET_RADIUS > player2.x - PLAYER_RADIUS &&
-          bullet.x - BULLET_RADIUS < player2.x + PLAYER_RADIUS &&
-          bullet.y + BULLET_RADIUS > player2.y - PLAYER_RADIUS &&
-          bullet.y - BULLET_RADIUS < player2.y + PLAYER_RADIUS
+          bullet.x + BULLET_RADIUS > enemy.x - PLAYER_RADIUS &&
+          bullet.x - BULLET_RADIUS < enemy.x + PLAYER_RADIUS &&
+          bullet.y + BULLET_RADIUS > enemy.y - PLAYER_RADIUS &&
+          bullet.y - BULLET_RADIUS < enemy.y + PLAYER_RADIUS &&
+          !bullet.name.endsWith(enemy.name)
         ) {
-          bullets.current.shift();
-          player2Score.current++;
+          if (playerName === 'player1') {
+            player1Score.current++;
+          } else {
+            player2Score.current++;
+          }
+          bullets.current = bullets.current.filter(
+            (item) => item.id !== bullet.id
+          );
         }
       });
     }
@@ -169,13 +238,15 @@ function App() {
       }
       // const shift = Math.min(elapsed / 10, 200);
       drawElements();
-      moveBullet(player1ShootingRate.current);
+      moveBullet(player2ShootingRate.current, 'player2');
+      moveBullet(player1ShootingRate.current, 'player1');
       movePlayer(player1);
       movePlayer(player2);
       window.requestAnimationFrame(loop);
     }
 
     const player1 = new Figure({
+      name: 'player1',
       x: PLAYER_RADIUS + 5,
       y: 100,
       width: PLAYER_RADIUS * 2,
@@ -185,11 +256,12 @@ function App() {
     });
 
     const player2 = new Figure({
+      name: 'player2',
       x: CANVAS_WIDTH - PLAYER_RADIUS - 5,
-      y: 130,
+      y: 100,
       width: PLAYER_RADIUS * 2,
       color: PLAYER2_COLOR,
-      speed: 5,
+      speed: 0,
       type: 'circle',
     });
 
