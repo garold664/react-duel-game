@@ -1,7 +1,7 @@
 import { Figure } from './classes';
 import { PLAYER_RADIUS } from './constants';
 
-function toggleMenu(
+function showMenu(
   setMenuState: React.Dispatch<React.SetStateAction<boolean>>,
   setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>,
   player1: Figure,
@@ -9,7 +9,7 @@ function toggleMenu(
 ) {
   return (e: React.MouseEvent) => {
     e.preventDefault();
-    setMenuState((prevState) => !prevState);
+    setMenuState(true);
     const mouseX = e.nativeEvent.offsetX;
     const mouseY = e.nativeEvent.offsetY;
     console.log(mouseX, mouseY);
@@ -32,4 +32,4 @@ function toggleMenu(
   };
 }
 
-export default toggleMenu;
+export default showMenu;

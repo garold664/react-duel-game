@@ -14,7 +14,7 @@ import moveBullet from './helpers/moveBullet';
 import movePlayer from './helpers/movePlayer';
 import drawElements from './helpers/drawElements';
 import clearRect from './helpers/clearRect';
-import toggleMenu from './helpers/toggleMenu';
+import showMenu from './helpers/showMenu';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -88,7 +88,7 @@ function App() {
         height={CANVAS_HEIGHT}
         className="border border-primary-200 rounded-lg"
         ref={canvasRef}
-        onClick={toggleMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
+        onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
       ></canvas>
     </>
   );
