@@ -30,7 +30,9 @@ function App() {
   const bullet1Color = useRef(BULLET_COLOR1);
   const bullet2Color = useRef(BULLET_COLOR2);
   const [isMenuShown, setIsMenuShown] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState('player1');
+  const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2'>(
+    'player1'
+  );
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
@@ -84,7 +86,17 @@ function App() {
       <h1>React Duel Game</h1>
       {isMenuShown && (
         <div>
-          {`Menu for ${currentPlayer}`}{' '}
+          {`Menu for ${currentPlayer}`}
+          <input
+            type="color"
+            onChange={(e) => {
+              if (currentPlayer === 'player1') {
+                bullet1Color.current = e.target.value;
+              } else {
+                bullet2Color.current = e.target.value;
+              }
+            }}
+          />
           <button onClick={() => setIsMenuShown(false)}>X</button>
         </div>
       )}
