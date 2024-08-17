@@ -30,6 +30,7 @@ function App() {
   const bullets = useRef<Bullet[]>([]);
   const bullet1Color = useRef(BULLET_COLOR1);
   const bullet2Color = useRef(BULLET_COLOR2);
+
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2'>(
     'player1'
