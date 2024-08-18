@@ -23,6 +23,7 @@ function movePlayer(player: Figure, mouseCoords: { x: number; y: number }) {
   if (
     player.speed < 0 &&
     player.y - PLAYER_RADIUS < mouseCoords.y &&
+    player.y - PLAYER_RADIUS + 3 > mouseCoords.y &&
     player.x + PLAYER_RADIUS > mouseCoords.x &&
     player.x - PLAYER_RADIUS < mouseCoords.x
   ) {
