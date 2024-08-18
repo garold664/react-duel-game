@@ -30,6 +30,14 @@ function movePlayer(player: Figure, mouseCoords: { x: number; y: number }) {
     player.speed = -player.speed;
   }
 
+  if (player.y + PLAYER_RADIUS > CANVAS_HEIGHT) {
+    player.y = CANVAS_HEIGHT - PLAYER_RADIUS;
+  }
+
+  if (player.y - PLAYER_RADIUS < 0) {
+    player.y = PLAYER_RADIUS;
+  }
+
   player.y += player.speed;
 }
 
