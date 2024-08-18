@@ -7,24 +7,26 @@ function showMenu(
   player1: Figure,
   player2: Figure
 ) {
+  const overlap = 30;
+  const radius = PLAYER_RADIUS + overlap;
   return (e: React.MouseEvent) => {
     e.preventDefault();
     const mouseX = e.nativeEvent.offsetX;
     const mouseY = e.nativeEvent.offsetY;
     if (
-      mouseX > player1.x - PLAYER_RADIUS &&
-      mouseX < player1.x + PLAYER_RADIUS &&
-      mouseY > player1.y - PLAYER_RADIUS &&
-      mouseY < player1.y + PLAYER_RADIUS
+      mouseX > player1.x - radius &&
+      mouseX < player1.x + radius &&
+      mouseY > player1.y - radius &&
+      mouseY < player1.y + radius
     ) {
       setCurrentPlayer('player1');
       setMenuState(true);
     }
     if (
-      mouseX > player2.x - PLAYER_RADIUS &&
-      mouseX < player2.x + PLAYER_RADIUS &&
-      mouseY > player2.y - PLAYER_RADIUS &&
-      mouseY < player2.y + PLAYER_RADIUS
+      mouseX > player2.x - radius &&
+      mouseX < player2.x + radius &&
+      mouseY > player2.y - radius &&
+      mouseY < player2.y + radius
     ) {
       setCurrentPlayer('player2');
       setMenuState(true);
