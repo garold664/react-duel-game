@@ -30,11 +30,19 @@ function App() {
   const bullets = useRef<Bullet[]>([]);
   const bullet1Color = useRef(BULLET_COLOR1);
   const bullet2Color = useRef(BULLET_COLOR2);
+  const mouseCoords = useRef({ x: 0, y: 0 });
 
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2'>(
     'player1'
   );
+
+  function getMouseCoords(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+    mouseCoords.current = {
+      x: e.nativeEvent.offsetX,
+      y: e.nativeEvent.offsetY,
+    };
+  }
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
@@ -68,8 +76,8 @@ function App() {
         bullet1Color.current,
         player1Score
       );
-      movePlayer(player1);
-      movePlayer(player2);
+      movePlayer(player1, mouseCoords.current);
+      movePlayer(player2, mouseCoords.current);
       window.requestAnimationFrame(loop);
     }
 
@@ -106,6 +114,7 @@ function App() {
         className="border border-primary-200 rounded-lg"
         ref={canvasRef}
         onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
+        onMouseMove={getMouseCoords}
       ></canvas>
     </>
   );

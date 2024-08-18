@@ -37,7 +37,7 @@ function moveBullet(
       id: Date.now(),
     });
     bullets.current.push(bullet);
-    console.log(bullets.current);
+    // console.log(bullets.current);
     drawElement(bullet, ctx);
   }
 
