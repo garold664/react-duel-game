@@ -14,6 +14,7 @@ export const player1 = new Figure({
   color: PLAYER1_COLOR,
   speed: 2,
   type: 'circle',
+  lineWidth: 0,
 });
 
 export const player2 = new Figure({
@@ -24,4 +25,5 @@ export const player2 = new Figure({
   color: PLAYER2_COLOR,
   speed: 2,
   type: 'circle',
+  lineWidth: 0,
 });

@@ -6,6 +6,7 @@ interface Circle {
   speed: number;
   type: 'circle';
   name: string;
+  lineWidth: number;
 }
 interface Rect {
   x: number;
@@ -16,6 +17,7 @@ interface Rect {
   speed: number;
   type: 'rectangle';
   name: string;
+  lineWidth: number;
 }
 type FigureOptions = Circle | Rect;
 

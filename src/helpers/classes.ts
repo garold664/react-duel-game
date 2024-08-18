@@ -7,6 +7,7 @@ class Figure {
   speed: number;
   type: 'rectangle' | 'circle';
   name: string;
+  lineWidth: number;
 
   constructor(options: FigureOptions) {
     this.x = options.x;
@@ -16,6 +17,7 @@ class Figure {
     this.speed = options.speed;
     this.type = options.type;
     this.name = options.name;
+    this.lineWidth = options.lineWidth;
 
     if (options.type === 'rectangle') {
       this.height = options.height;
