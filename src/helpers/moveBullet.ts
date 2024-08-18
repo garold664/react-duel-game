@@ -35,6 +35,7 @@ function moveBullet(
       speed: playerName === 'player1' ? BULLET_SPEED1 : -BULLET_SPEED2,
       type: 'circle',
       id: Date.now(),
+      lineWidth: 0,
     });
     bullets.current.push(bullet);
     // console.log(bullets.current);
