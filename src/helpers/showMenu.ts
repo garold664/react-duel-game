@@ -9,10 +9,8 @@ function showMenu(
 ) {
   return (e: React.MouseEvent) => {
     e.preventDefault();
-    setMenuState(true);
     const mouseX = e.nativeEvent.offsetX;
     const mouseY = e.nativeEvent.offsetY;
-    console.log(mouseX, mouseY);
     if (
       mouseX > player1.x - PLAYER_RADIUS &&
       mouseX < player1.x + PLAYER_RADIUS &&
@@ -20,6 +18,7 @@ function showMenu(
       mouseY < player1.y + PLAYER_RADIUS
     ) {
       setCurrentPlayer('player1');
+      setMenuState(true);
     }
     if (
       mouseX > player2.x - PLAYER_RADIUS &&
@@ -28,6 +27,7 @@ function showMenu(
       mouseY < player2.y + PLAYER_RADIUS
     ) {
       setCurrentPlayer('player2');
+      setMenuState(true);
     }
   };
 }
