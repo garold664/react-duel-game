@@ -3,7 +3,7 @@ import { PLAYER_RADIUS } from './constants';
 
 function showMenu(
   setMenuState: React.Dispatch<React.SetStateAction<boolean>>,
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>,
+  setCurrentPlayer: React.Dispatch<React.SetStateAction<'player1' | 'player2'>>,
   player1: Figure,
   player2: Figure
 ) {
