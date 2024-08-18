@@ -2,7 +2,8 @@ import { Figure } from './classes';
 import { CANVAS_HEIGHT, PLAYER_RADIUS } from './constants';
 
 function movePlayer(player: Figure, mouseCoords: { x: number; y: number }) {
-  const OVERLAP = 5;
+  const overlap = 5 + Math.abs(player.speed * 0.5);
+  console.log(overlap);
   if (
     player.y > CANVAS_HEIGHT - PLAYER_RADIUS ||
     player.y < 0 + PLAYER_RADIUS
@@ -13,7 +14,7 @@ function movePlayer(player: Figure, mouseCoords: { x: number; y: number }) {
   if (
     player.speed > 0 &&
     player.y + PLAYER_RADIUS > mouseCoords.y &&
-    player.y + PLAYER_RADIUS - OVERLAP < mouseCoords.y &&
+    player.y + PLAYER_RADIUS - overlap < mouseCoords.y &&
     player.x + PLAYER_RADIUS > mouseCoords.x &&
     player.x - PLAYER_RADIUS < mouseCoords.x
   ) {
@@ -23,7 +24,7 @@ function movePlayer(player: Figure, mouseCoords: { x: number; y: number }) {
   if (
     player.speed < 0 &&
     player.y - PLAYER_RADIUS < mouseCoords.y &&
-    player.y - PLAYER_RADIUS + OVERLAP > mouseCoords.y &&
+    player.y - PLAYER_RADIUS + overlap > mouseCoords.y &&
     player.x + PLAYER_RADIUS > mouseCoords.x &&
     player.x - PLAYER_RADIUS < mouseCoords.x
   ) {
