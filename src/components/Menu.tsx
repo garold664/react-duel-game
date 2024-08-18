@@ -21,7 +21,7 @@ export default function Menu({
   console.log('playerSpeed: ', playerSpeed);
   console.dir(currentPlayer);
   return (
-    <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 backdrop-blur-md border-primary-500 border-4 rounded-xl flex  flex-col justify-center items-center bg-primary-900/35 shadow-lg shadow-primary-900">
+    <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 backdrop-blur-md border-primary-500 border-4 rounded-xl flex  flex-col justify-center items-center bg-primary-900/35 shadow-lg shadow-primary-900">
       <h2>{`Menu for ${currentPlayer.name}`}</h2>
       <input
         type="color"
@@ -52,7 +52,7 @@ export default function Menu({
             // console.log(e.target.value);
           }}
         />
-        <span>{playerSpeed}</span>
+        <span className="w-10">{playerSpeed}</span>
       </div>
       <div className="flex gap-4 py-6">
         <label>shooting rate:</label>
@@ -67,7 +67,7 @@ export default function Menu({
             setShootRate(Number(e.target.value));
           }}
         />
-        <span>{shootRate}</span>
+        <span className="w-10">{shootRate}</span>
       </div>
       <button onClick={() => setIsMenuShown(false)}>X</button>
     </div>
