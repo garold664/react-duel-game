@@ -7,6 +7,7 @@ import drawElements from './helpers/drawElements';
 import clearRect from './helpers/clearRect';
 import showMenu from './helpers/showMenu';
 import Menu from './components/Menu';
+import throttle from './helpers/throttle';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -19,12 +20,15 @@ function App() {
     'player1'
   );
 
-  function getMouseCoords(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+  const getMouseCoords = throttle(function (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) {
     mouseCoords.current = {
       x: e.nativeEvent.offsetX,
       y: e.nativeEvent.offsetY,
     };
-  }
+  },
+  40);
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
