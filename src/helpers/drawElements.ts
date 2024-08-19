@@ -1,21 +1,15 @@
 import clearRect from './clearRect';
 import displayScore from './displayScore';
-import drawElement from './drawElement';
 import { player1, player2 } from './players';
 
-function drawElements(
-  ctx: CanvasRenderingContext2D | null = null,
-  score1: number,
-  score2: number
-) {
+function drawElements(ctx: CanvasRenderingContext2D | null = null) {
   clearRect(ctx);
 
-  // drawElement(bullet);
-  drawElement(player1, ctx);
-  drawElement(player2, ctx);
+  player1.drawElement(ctx);
+  player2.drawElement(ctx);
 
-  displayScore(score1, 'player1', ctx);
-  displayScore(score2, 'player2', ctx);
+  displayScore(player1.score, player1.name, ctx);
+  displayScore(player2.score, player2.name, ctx);
 }
 
 export default drawElements;

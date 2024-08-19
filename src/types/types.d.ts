@@ -1,7 +1,7 @@
 interface Circle {
   x: number;
   y: number;
-  width: number;
+  radius: number;
   color: string;
   speed: number;
   type: 'circle';
@@ -23,4 +23,13 @@ type FigureOptions = Circle | Rect;
 
 type BulletOptions = FigureOptions & {
   id: number;
+  radius: number;
+};
+type PlayerOptions = FigureOptions & {
+  radius: number;
+  bulletColor: string;
+  score: number;
+  name: 'player1' | 'player2';
+  shootingRate: number;
+  gameFrame: number;
 };

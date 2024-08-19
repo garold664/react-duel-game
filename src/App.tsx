@@ -1,17 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  CANVAS_WIDTH,
-  CANVAS_HEIGHT,
-  BULLET_COLOR1,
-  BULLET_COLOR2,
-  INITIAL_BULLET_RATE,
-} from './helpers/constants';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from './helpers/constants';
 import './App.css';
 
-import { Bullet } from './helpers/classes';
 import { player1, player2 } from './helpers/players';
-import moveBullet from './helpers/moveBullet';
-import movePlayer from './helpers/movePlayer';
 import drawElements from './helpers/drawElements';
 import clearRect from './helpers/clearRect';
 import showMenu from './helpers/showMenu';
@@ -20,16 +11,7 @@ import Menu from './components/Menu';
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const start = useRef<number | undefined>();
-  const player1Score = useRef(0);
-  const player2Score = useRef(0);
-  const player1ShootingRate = useRef(INITIAL_BULLET_RATE);
-  const player2ShootingRate = useRef(INITIAL_BULLET_RATE);
 
-  const gameFrame1 = useRef(0);
-  const gameFrame2 = useRef(1);
-  const bullets = useRef<Bullet[]>([]);
-  const bullet1Color = useRef(BULLET_COLOR1);
-  const bullet2Color = useRef(BULLET_COLOR2);
   const mouseCoords = useRef({ x: 0, y: 0 });
 
   const [isMenuShown, setIsMenuShown] = useState(false);
@@ -56,37 +38,19 @@ function App() {
       if (elapsed > 1000) {
         start.current = timeStamp;
       }
-      // const shift = Math.min(elapsed / 10, 200);
-      drawElements(ctx, player1Score.current, player2Score.current);
-      moveBullet(
-        player2ShootingRate.current,
-        'player2',
-        gameFrame1,
-        bullets,
-        ctx,
-        bullet2Color.current,
-        player2Score
-      );
-      moveBullet(
-        player1ShootingRate.current,
-        'player1',
-        gameFrame2,
-        bullets,
-        ctx,
-        bullet1Color.current,
-        player1Score
-      );
-      movePlayer(player1, mouseCoords.current);
-      movePlayer(player2, mouseCoords.current);
+      drawElements(ctx);
+
+      player1.shoot(ctx);
+      player2.shoot(ctx);
+      player1.move(mouseCoords.current);
+      player2.move(mouseCoords.current);
       window.requestAnimationFrame(loop);
     }
 
     loop(0);
 
     return () => {
-      if (!canvasRef.current) return;
-      const currentCanvas = canvasRef.current;
-      const ctx = currentCanvas.getContext('2d');
+      if (!ctx) return;
       clearRect(ctx);
     };
   }, []);
@@ -99,13 +63,6 @@ function App() {
           key={currentPlayer}
           setIsMenuShown={setIsMenuShown}
           currentPlayer={currentPlayer === 'player1' ? player1 : player2}
-          bullet1Color={bullet1Color}
-          bullet2Color={bullet2Color}
-          shootingRate={
-            currentPlayer === 'player1'
-              ? player1ShootingRate
-              : player2ShootingRate
-          }
         />
       )}
       <canvas
