@@ -13,6 +13,7 @@ export default function PlayerControls({ player }: PlayerControlsProps) {
     <div>
       <h2 className="text-4xl">{player.name}</h2>
       <Range
+        label="speed"
         min={0}
         max={5}
         step={0.2}
@@ -23,6 +24,7 @@ export default function PlayerControls({ player }: PlayerControlsProps) {
         }}
       />
       <Range
+        label="shooting rate"
         min={0}
         max={30}
         value={shootRate}

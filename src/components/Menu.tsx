@@ -34,6 +34,7 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
       </label>
 
       <Range
+        label="speed"
         min={0}
         max={5}
         step={0.2}
@@ -44,6 +45,7 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
         }}
       />
       <Range
+        label="shooting rate"
         min={0}
         max={30}
         value={shootRate}

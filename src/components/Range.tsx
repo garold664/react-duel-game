@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface RangeProps {
+  label: string;
   min: number;
   max: number;
   step?: number;
@@ -8,6 +9,7 @@ interface RangeProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export default function Range({
+  label,
   min,
   max,
   step = 1,
@@ -16,7 +18,7 @@ export default function Range({
 }: RangeProps) {
   return (
     <div className="flex gap-4 py-6">
-      <label>speed:</label>
+      <label>{label}:</label>
       <input
         type="range"
         min={min}
