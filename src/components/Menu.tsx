@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Player } from '../helpers/classes';
+import Player from '../helpers/classes/Player';
 
 interface MenuProps {
   setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>;
