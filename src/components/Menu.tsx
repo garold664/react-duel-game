@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Player from '../helpers/classes/Player';
+import Range from './Range';
 
 interface MenuProps {
   setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,35 +23,26 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
           currentPlayer.bulletColor = e.target.value;
         }}
       />
-      <div className="flex gap-4 py-6">
-        <label>speed:</label>
-        <input
-          type="range"
-          min={0}
-          max={5}
-          step={0.2}
-          value={playerSpeed}
-          onChange={(e) => {
-            currentPlayer.speed = Number(e.target.value);
-            setPlayerSpeed(Number(e.target.value));
-          }}
-        />
-        <span className="w-10">{playerSpeed}</span>
-      </div>
-      <div className="flex gap-4 py-6">
-        <label>shooting rate:</label>
-        <input
-          type="range"
-          min={0}
-          max={30}
-          value={shootRate}
-          onChange={(e) => {
-            currentPlayer.shootingRate = Number(e.target.value);
-            setShootRate(Number(e.target.value));
-          }}
-        />
-        <span className="w-10">{shootRate}</span>
-      </div>
+      <Range
+        min={0}
+        max={5}
+        step={0.2}
+        value={playerSpeed}
+        onChange={(e) => {
+          currentPlayer.speed = Number(e.target.value);
+          setPlayerSpeed(Number(e.target.value));
+        }}
+      />
+      <Range
+        min={0}
+        max={30}
+        value={shootRate}
+        onChange={(e) => {
+          currentPlayer.shootingRate = Number(e.target.value);
+          setShootRate(Number(e.target.value));
+        }}
+      />
+
       <button onClick={() => setIsMenuShown(false)}>X</button>
     </div>
   );
