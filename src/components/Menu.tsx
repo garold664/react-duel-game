@@ -27,7 +27,8 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
         <input
           type="range"
           min={0}
-          max={30}
+          max={5}
+          step={0.2}
           value={playerSpeed}
           onChange={(e) => {
             currentPlayer.speed = Number(e.target.value);
