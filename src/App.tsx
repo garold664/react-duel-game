@@ -8,6 +8,7 @@ import clearRect from './helpers/clearRect';
 import showMenu from './helpers/showMenu';
 import Menu from './components/Menu';
 import throttle from './helpers/throttle';
+import PlayerControls from './components/PlayerControls';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,7 +29,7 @@ function App() {
       y: e.nativeEvent.offsetY,
     };
   },
-  0);
+  50);
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
@@ -69,14 +70,18 @@ function App() {
           currentPlayer={currentPlayer === 'player1' ? player1 : player2}
         />
       )}
-      <canvas
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-        className="border border-primary-200 rounded-lg"
-        ref={canvasRef}
-        onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
-        onMouseMove={getMouseCoords}
-      ></canvas>
+      <div className="flex justify-center items-center gap-x-6">
+        <PlayerControls player={player1} />
+        <canvas
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          className="border border-primary-200 rounded-lg"
+          ref={canvasRef}
+          onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
+          onMouseMove={getMouseCoords}
+        ></canvas>
+        <PlayerControls player={player2} />
+      </div>
     </>
   );
 }
