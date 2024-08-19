@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Player from '../helpers/classes/Player';
-import Range from './Range';
 
 interface MenuProps {
   setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,10 +7,6 @@ interface MenuProps {
 }
 
 export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
-  const [playerSpeed, setPlayerSpeed] = useState(Math.abs(currentPlayer.speed));
-  const [shootRate, setShootRate] = useState(
-    Math.abs(currentPlayer.shootingRate)
-  );
   const [bulletColor, setBulletColor] = useState(currentPlayer.bulletColor);
 
   return (

@@ -7,7 +7,6 @@ import {
   CANVAS_WIDTH,
 } from '../constants';
 import getDistance from '../getDistance';
-import getDistance from '../getDistance';
 import Bullet from './Bullet';
 
 class Player extends Figure {
