@@ -7,7 +7,6 @@ import drawElements from '../helpers/drawElements';
 import clearRect from '../helpers/clearRect';
 import showMenu from '../helpers/showMenu';
 import throttle from '../helpers/throttle';
-import PlayerControls from '../components/PlayerControls';
 
 interface GameBoardProps {
   setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>;

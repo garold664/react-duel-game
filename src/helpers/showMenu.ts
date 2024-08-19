@@ -1,4 +1,4 @@
-import { Figure } from './classes';
+import Figure from './classes/Figure';
 import { PLAYER_RADIUS } from './constants';
 
 function showMenu(
