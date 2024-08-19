@@ -33,28 +33,6 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
         />
       </label>
 
-      <Range
-        label="speed"
-        min={0}
-        max={5}
-        step={0.2}
-        value={playerSpeed}
-        onChange={(e) => {
-          currentPlayer.speed = Number(e.target.value);
-          setPlayerSpeed(Number(e.target.value));
-        }}
-      />
-      <Range
-        label="shooting rate"
-        min={0}
-        max={30}
-        value={shootRate}
-        onChange={(e) => {
-          currentPlayer.shootingRate = Number(e.target.value);
-          setShootRate(Number(e.target.value));
-        }}
-      />
-
       <button
         className="absolute right-2 top-2 p-0 w-10 h-10 rounded-full"
         onClick={() => setIsMenuShown(false)}
