@@ -6,6 +6,8 @@ import {
   BULLET_SPEED2,
   CANVAS_WIDTH,
 } from '../constants';
+import getDistance from '../getDistance';
+import getDistance from '../getDistance';
 import Bullet from './Bullet';
 
 class Player extends Figure {
@@ -29,28 +31,18 @@ class Player extends Figure {
   }
 
   move(mouseCoords: { x: number; y: number }) {
-    // if (!this.radius) return;
-    const overlap = 5 + Math.abs(this.speed * 0.5);
+    // const overlap = 5 + Math.abs(this.speed * 0.5);
     if (this.y > CANVAS_HEIGHT - this.radius || this.y < 0 + this.radius) {
       this.speed = this.speed * -1;
     }
+    const distance = getDistance(this.x, this.y, mouseCoords.x, mouseCoords.y);
+    const isTouching =
+      distance <= this.radius + 1 && distance > this.radius - 1;
 
     if (
-      this.speed > 0 &&
-      this.y + this.radius > mouseCoords.y &&
-      this.y + this.radius - overlap < mouseCoords.y &&
-      this.x + this.radius > mouseCoords.x &&
-      this.x - this.radius < mouseCoords.x
-    ) {
-      this.speed = -this.speed;
-    }
-
-    if (
-      this.speed < 0 &&
-      this.y - this.radius < mouseCoords.y &&
-      this.y - this.radius + overlap > mouseCoords.y &&
-      this.x + this.radius > mouseCoords.x &&
-      this.x - this.radius < mouseCoords.x
+      isTouching &&
+      ((this.speed > 0 && mouseCoords.y > this.y) ||
+        (this.speed < 0 && mouseCoords.y < this.y))
     ) {
       this.speed = -this.speed;
     }

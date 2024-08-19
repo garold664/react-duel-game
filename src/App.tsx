@@ -28,7 +28,7 @@ function App() {
       y: e.nativeEvent.offsetY,
     };
   },
-  40);
+  0);
   useEffect(() => {
     if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
