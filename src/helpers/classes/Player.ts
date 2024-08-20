@@ -33,7 +33,7 @@ class Player extends Figure {
     // const overlap = 5 + Math.abs(this.speed * 0.5);
     const overlap = 5;
     if (this.y > CANVAS_HEIGHT - this.radius || this.y < 0 + this.radius) {
-      this.speed = this.speed * -1;
+      this.speed = -this.speed;
     }
     const distance = getDistance(this.x, this.y, mouseCoords.x, mouseCoords.y);
     const isTouching =
