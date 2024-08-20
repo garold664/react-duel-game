@@ -5,11 +5,12 @@ import {
   PLAYER1_COLOR,
   PLAYER2_COLOR,
   PLAYER_RADIUS,
+  PLAYERS_GAP,
 } from './constants';
 
 export const player1 = new Player({
   name: 'player1',
-  x: PLAYER_RADIUS + 5,
+  x: PLAYER_RADIUS + PLAYERS_GAP,
   y: 100,
   radius: PLAYER_RADIUS,
   color: PLAYER1_COLOR,
@@ -24,7 +25,7 @@ export const player1 = new Player({
 
 export const player2 = new Player({
   name: 'player2',
-  x: CANVAS_WIDTH - PLAYER_RADIUS - 5,
+  x: CANVAS_WIDTH - PLAYER_RADIUS - PLAYERS_GAP,
   y: 100,
   radius: PLAYER_RADIUS,
   color: PLAYER2_COLOR,
