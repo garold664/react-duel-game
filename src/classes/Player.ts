@@ -67,7 +67,10 @@ class Player extends Figure {
       (player.gameFrame + 1) % (1000 / player.shootingRate)
     );
 
-    if (player.gameFrame === 1) {
+    if (
+      (player.name === 'player1' && player.gameFrame === 0) ||
+      (player.name === 'player2' && player.gameFrame === 30)
+    ) {
       const bullet = new Bullet({
         name: 'bullet' + playerName,
         x: player.x,
