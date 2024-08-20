@@ -10,3 +10,5 @@ export const BULLET_COLOR2 = '#8000ff';
 export const BULLET_SPEED1 = 5;
 export const BULLET_SPEED2 = 5;
 export const INITIAL_BULLET_RATE = 10;
+
+export const MOUSE_THROTTLE_DELAY = 50;
