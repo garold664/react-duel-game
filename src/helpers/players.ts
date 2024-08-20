@@ -1,4 +1,4 @@
-import Player from './classes/Player';
+import Player from '../classes/Player';
 import {
   CANVAS_WIDTH,
   INITIAL_BULLET_RATE,

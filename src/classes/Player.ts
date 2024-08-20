@@ -1,12 +1,12 @@
-import Figure from '../classes/Figure';
+import Figure from './Figure';
 import {
   CANVAS_HEIGHT,
   BULLET_RADIUS,
   BULLET_SPEED1,
   BULLET_SPEED2,
   CANVAS_WIDTH,
-} from '../constants';
-import getDistance from '../getDistance';
+} from '../helpers/constants';
+import getDistance from '../helpers/getDistance';
 import Bullet from './Bullet';
 
 class Player extends Figure {
