@@ -15,7 +15,6 @@ interface GameBoardProps {
 
 const GameBoard = memo(
   ({ setIsMenuShown, setCurrentPlayer }: GameBoardProps) => {
-    // console.log('game board rendered');
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const start = useRef<number | undefined>();
     const mouseTracker = useRef<HTMLDivElement | null>(null);
@@ -29,10 +28,10 @@ const GameBoard = memo(
         x: e.nativeEvent.offsetX,
         y: e.nativeEvent.offsetY,
       };
-      console.log(mouseCoords.current);
+      // console.log(mouseCoords.current);
       if (!mouseTracker.current) return;
-      mouseTracker.current.style.top = `${mouseCoords.current.y}px`;
-      mouseTracker.current.style.left = `${mouseCoords.current.x}px`;
+      mouseTracker.current.style.top = `${mouseCoords.current.y - 5}px`;
+      mouseTracker.current.style.left = `${mouseCoords.current.x - 5}px`;
     },
     50);
     useEffect(() => {
@@ -74,6 +73,15 @@ const GameBoard = memo(
           ref={canvasRef}
           onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
           onMouseMove={getMouseCoords}
+          onMouseLeave={() => {
+            // console.log('leave');
+            setTimeout(() => {
+              mouseCoords.current = { x: 0, y: 0 };
+              if (!mouseTracker.current) return;
+              mouseTracker.current.style.top = '0px';
+              mouseTracker.current.style.left = '0px';
+            }, 250);
+          }}
         ></canvas>
         <div
           ref={mouseTracker}
