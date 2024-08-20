@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import Range from './Range';
 import Player from '../helpers/classes/Player';
 import { RANGE_ONCHANGE_DEBOUNCE_DELAY } from '../helpers/constants';
@@ -12,17 +12,20 @@ const PlayerControls = memo(({ player }: PlayerControlsProps) => {
   const [playerSpeed, setPlayerSpeed] = useState(Math.abs(player.speed));
   const [shootRate, setShootRate] = useState(Math.abs(player.shootingRate));
 
+  const timeout = useRef<number | undefined>(undefined);
+
   const debounce = useCallback(
     /* eslint-disable @typescript-eslint/no-explicit-any */
     <R, A extends any[]>(
       cb: (...args: A) => R,
       delay = RANGE_ONCHANGE_DEBOUNCE_DELAY
     ) => {
-      let timeout: number | undefined;
+      // let timeout: number | undefined;
 
       return (...args: A) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
+        // console.log(timeout.current);
+        clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
           cb(...args);
         }, delay);
       };
