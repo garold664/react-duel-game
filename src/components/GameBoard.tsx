@@ -16,7 +16,6 @@ interface GameBoardProps {
 const GameBoard = memo(
   ({ setIsMenuShown, setCurrentPlayer }: GameBoardProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const start = useRef<number | undefined>();
     const mouseTracker = useRef<HTMLDivElement | null>(null);
 
     const mouseCoords = useRef({ x: 0, y: 0 });
@@ -75,8 +74,8 @@ const GameBoard = memo(
           }}
         ></canvas>
         <div
-          ref={mouseTracker}
-          className="w-2 h-2 bg-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+          // ref={mouseTracker}
+          className="w-2 h-2 bg-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 hidden"
         ></div>
       </div>
     );
