@@ -1,3 +1,4 @@
+import { BULLET_RADIUS } from '../helpers/constants';
 import Bullet from './Bullet';
 
 class HitEffect extends Bullet {
@@ -5,7 +6,6 @@ class HitEffect extends Bullet {
     const bulletOptions: BulletOptions = {
       ...options,
       speed: 0,
-      radius: 0,
       type: 'circle',
       id: 0,
     };
