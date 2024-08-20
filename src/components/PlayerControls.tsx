@@ -37,7 +37,7 @@ const PlayerControls = memo(({ player }: PlayerControlsProps) => {
   const speedOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const updateSpeed = debounce((value: number) => {
-        console.log(prevSpeed.current);
+        // console.log(prevSpeed.current);
         if (player.speed !== 0) prevSpeed.current = player.speed;
         const prevSign = prevSpeed.current && prevSpeed.current < 0 ? -1 : 1;
         player.speed = value * prevSign;
@@ -61,7 +61,7 @@ const PlayerControls = memo(({ player }: PlayerControlsProps) => {
   );
 
   return (
-    <div className="p-2">
+    <div className="p-2 border-2 border-primary-950 rounded-lg ">
       <h2 className="text-4xl">{player.name}</h2>
       <Range
         label="speed"

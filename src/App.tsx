@@ -20,13 +20,13 @@ export default function App() {
         />
       )}
       <h1 className="text-center text-7xl mb-12">React Duel Game</h1>
-      <div className="flex justify-center items-center gap-x-6">
+      <div className="flex justify-center items-center gap-6 flex-wrap">
         <PlayerControls player={player1} />
+        <PlayerControls player={player2} />
         <GameBoard
           setIsMenuShown={setIsMenuShown}
           setCurrentPlayer={setCurrentPlayer}
         />
-        <PlayerControls player={player2} />
       </div>
     </>
   );
