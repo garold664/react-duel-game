@@ -10,8 +10,8 @@ export default function Menu({ setIsMenuShown, currentPlayer }: MenuProps) {
   const [bulletColor, setBulletColor] = useState(currentPlayer.bulletColor);
 
   return (
-    <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 backdrop-blur-md border-primary-500 border-4 rounded-xl flex  flex-col justify-center items-center bg-primary-900/35 shadow-lg shadow-primary-900 z-[100]">
-      <h2>{`Set color of bullets for ${currentPlayer.name}`}</h2>
+    <div className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 backdrop-blur-md border-primary-500 border-4 rounded-xl flex  flex-col justify-center items-center bg-primary-900/35 shadow-lg shadow-primary-900 z-[100] gap-10 p-6">
+      <h2 className="text-2xl">{`Set color of bullets for ${currentPlayer.name}`}</h2>
 
       <label
         className="w-32 h-32 rounded-full flex justify-center items-center"
