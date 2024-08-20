@@ -12,6 +12,7 @@ const PlayerControls = memo(({ player }: PlayerControlsProps) => {
   const [playerSpeed, setPlayerSpeed] = useState(Math.abs(player.speed));
   const [shootRate, setShootRate] = useState(Math.abs(player.shootingRate));
 
+  const prevSpeed = useRef<number | null>(null);
   const timeout = useRef<number | undefined>(undefined);
 
   const debounce = useCallback(
@@ -36,7 +37,10 @@ const PlayerControls = memo(({ player }: PlayerControlsProps) => {
   const speedOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const updateSpeed = debounce((value: number) => {
-        player.speed = value;
+        console.log(prevSpeed.current);
+        if (player.speed !== 0) prevSpeed.current = player.speed;
+        const prevSign = prevSpeed.current && prevSpeed.current < 0 ? -1 : 1;
+        player.speed = value * prevSign;
       });
       updateSpeed(Number(e.target.value));
       setPlayerSpeed(Number(e.target.value));
