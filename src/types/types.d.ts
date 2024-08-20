@@ -32,4 +32,10 @@ type PlayerOptions = FigureOptions & {
   name: 'player1' | 'player2';
   shootingRate: number;
   gameFrame: number;
+  hit: boolean;
+  hitEffect: HitEffectOptions;
+};
+
+type HitEffectOptions = Omit<FigureOptions, 'speed'> & {
+  radius: number;
 };

@@ -8,6 +8,11 @@ import {
 } from '../helpers/constants';
 import getDistance from '../helpers/getDistance';
 import Bullet from './Bullet';
+import HitEffect from './HitEffect';
+
+let timer = 0;
+let growFactor = 1.01;
+let opacity = 1;
 
 class Player extends Figure {
   bulletColor: string;
@@ -16,6 +21,8 @@ class Player extends Figure {
   shootingRate: number;
   gameFrame: number;
   radius: number;
+  hit: boolean;
+  hitEffect: HitEffect;
 
   static player1: Player;
   static player2: Player;
@@ -27,6 +34,16 @@ class Player extends Figure {
     this.shootingRate = options.shootingRate;
     this.gameFrame = options.gameFrame;
     this.radius = options.radius;
+    this.hit = options.hit;
+    this.hitEffect = new HitEffect({
+      name: 'hitEffect',
+      type: 'circle',
+      color: '#ffffff40',
+      lineWidth: 0,
+      x: -1000,
+      y: -1000,
+      radius: this.radius,
+    });
   }
 
   move(mouseCoords: { x: number; y: number }) {
@@ -58,7 +75,7 @@ class Player extends Figure {
     this.y += this.speed;
   }
 
-  shoot(ctx: CanvasRenderingContext2D | null = null) {
+  shoot(ctx: CanvasRenderingContext2D | null) {
     const playerName = this.name;
     const player = playerName === 'player2' ? Player.player2 : Player.player1;
     const enemy = playerName === 'player1' ? Player.player2 : Player.player1;
@@ -86,6 +103,28 @@ class Player extends Figure {
       bullet.drawElement(ctx);
     }
 
+    if (enemy.hit) {
+      timer++;
+
+      enemy.hitEffect.x = enemy.x;
+      enemy.hitEffect.y = enemy.y;
+      enemy.hitEffect.radius *= growFactor;
+      enemy.hitEffect.color = `rgba(150, 0, 0, ${opacity})`;
+      opacity -= 0.03;
+      growFactor += 0.005;
+
+      if (timer > 28) {
+        opacity = 1;
+        enemy.hitEffect.x = -1000;
+        enemy.hitEffect.y = -1000;
+        enemy.hitEffect.radius = enemy.radius;
+        timer = 0;
+        enemy.hit = false;
+        growFactor = 1.01;
+        // console.log(enemy.color);
+      }
+      enemy.hitEffect.drawElement(ctx);
+    }
     Bullet.bullets.forEach((bullet) => {
       bullet.x += bullet.speed;
       bullet.drawElement(ctx);
@@ -112,6 +151,7 @@ class Player extends Figure {
       ) {
         player.score++;
         Bullet.bullets = Bullet.bullets.filter((item) => item.id !== bullet.id);
+        enemy.hit = true;
       }
     });
   }

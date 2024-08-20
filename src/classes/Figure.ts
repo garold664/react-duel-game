@@ -27,7 +27,7 @@ class Figure {
     }
   }
 
-  drawElement(ctx: CanvasRenderingContext2D | null = null) {
+  drawElement(ctx: CanvasRenderingContext2D | null) {
     if (!ctx) return;
     if (this.type === 'rectangle' && this.height && this.width) {
       ctx.fillStyle = this.color;
