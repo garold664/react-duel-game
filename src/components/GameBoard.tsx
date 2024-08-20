@@ -38,15 +38,7 @@ const GameBoard = memo(
       if (!canvasRef.current) return;
       const ctx = canvasRef.current?.getContext('2d');
 
-      function loop(timeStamp: number) {
-        if (start.current === undefined) {
-          start.current = timeStamp;
-        }
-        const elapsed = timeStamp - start.current;
-        // console.log(elapsed);
-        if (elapsed > 1000) {
-          start.current = timeStamp;
-        }
+      function loop() {
         drawElements(ctx);
 
         player1.shoot(ctx);
@@ -56,7 +48,7 @@ const GameBoard = memo(
         window.requestAnimationFrame(loop);
       }
 
-      loop(0);
+      loop();
 
       return () => {
         if (!ctx) return;
@@ -74,7 +66,6 @@ const GameBoard = memo(
           onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
           onMouseMove={getMouseCoords}
           onMouseLeave={() => {
-            // console.log('leave');
             setTimeout(() => {
               mouseCoords.current = { x: 0, y: 0 };
               if (!mouseTracker.current) return;
