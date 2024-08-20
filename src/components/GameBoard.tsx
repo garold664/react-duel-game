@@ -18,6 +18,7 @@ const GameBoard = memo(
     // console.log('game board rendered');
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const start = useRef<number | undefined>();
+    const mouseTracker = useRef<HTMLDivElement | null>(null);
 
     const mouseCoords = useRef({ x: 0, y: 0 });
 
@@ -28,6 +29,10 @@ const GameBoard = memo(
         x: e.nativeEvent.offsetX,
         y: e.nativeEvent.offsetY,
       };
+      console.log(mouseCoords.current);
+      if (!mouseTracker.current) return;
+      mouseTracker.current.style.top = `${mouseCoords.current.y}px`;
+      mouseTracker.current.style.left = `${mouseCoords.current.x}px`;
     },
     50);
     useEffect(() => {
@@ -61,7 +66,7 @@ const GameBoard = memo(
     }, []);
 
     return (
-      <>
+      <div className="relative">
         <canvas
           width={CANVAS_WIDTH}
           height={CANVAS_HEIGHT}
@@ -70,7 +75,11 @@ const GameBoard = memo(
           onClick={showMenu(setIsMenuShown, setCurrentPlayer, player1, player2)}
           onMouseMove={getMouseCoords}
         ></canvas>
-      </>
+        <div
+          ref={mouseTracker}
+          className="w-2 h-2 bg-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+        ></div>
+      </div>
     );
   }
 );
