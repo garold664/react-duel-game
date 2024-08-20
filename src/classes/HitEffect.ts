@@ -2,7 +2,14 @@ import Bullet from './Bullet';
 
 class HitEffect extends Bullet {
   constructor(options: HitEffectOptions) {
-    super(options);
+    const bulletOptions: BulletOptions = {
+      ...options,
+      speed: 0,
+      radius: 0,
+      type: 'circle',
+      id: 0,
+    };
+    super(bulletOptions);
   }
 }
 

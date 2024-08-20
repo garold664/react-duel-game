@@ -21,6 +21,7 @@ export const player1 = new Player({
   score: 0,
   shootingRate: INITIAL_BULLET_RATE,
   gameFrame: 0,
+  hit: false,
 });
 
 export const player2 = new Player({
@@ -36,6 +37,7 @@ export const player2 = new Player({
   score: 0,
   shootingRate: INITIAL_BULLET_RATE,
   gameFrame: 0,
+  hit: false,
 });
 
 Player.player1 = player1;

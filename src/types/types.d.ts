@@ -33,7 +33,7 @@ type PlayerOptions = FigureOptions & {
   shootingRate: number;
   gameFrame: number;
   hit: boolean;
-  hitEffect: HitEffectOptions;
+  // hitEffect: HitEffectOptions;
 };
 
 type HitEffectOptions = Omit<FigureOptions, 'speed'> & {
