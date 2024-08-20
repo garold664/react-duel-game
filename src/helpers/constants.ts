@@ -12,3 +12,4 @@ export const BULLET_SPEED2 = 5;
 export const INITIAL_BULLET_RATE = 10;
 
 export const MOUSE_THROTTLE_DELAY = 50;
+export const RANGE_ONCHANGE_DEBOUNCE_DELAY = 200;
