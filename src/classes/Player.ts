@@ -9,6 +9,7 @@ import {
 import getDistance from '../helpers/getDistance';
 import Bullet from './Bullet';
 import HitEffect from './HitEffect';
+import drawHitEffect from '../helpers/drawHitEffect';
 
 class Player extends Figure {
   bulletColor: string;
@@ -104,26 +105,7 @@ class Player extends Figure {
     }
 
     if (enemy.hit) {
-      enemy.hitEffect.timer++;
-
-      enemy.hitEffect.x = enemy.x;
-      enemy.hitEffect.y = enemy.y;
-      enemy.hitEffect.radius *= enemy.hitEffect.growFactor;
-      enemy.hitEffect.color = `rgba(150, 0, 0, ${enemy.hitEffect.opacity})`;
-      enemy.hitEffect.opacity -= 0.03;
-      enemy.hitEffect.growFactor += 0.005;
-
-      if (enemy.hitEffect.timer > 28) {
-        enemy.hitEffect.opacity = 1;
-        enemy.hitEffect.x = -1000;
-        enemy.hitEffect.y = -1000;
-        enemy.hitEffect.radius = enemy.radius;
-        enemy.hitEffect.timer = 0;
-        enemy.hit = false;
-        enemy.hitEffect.growFactor = 1.01;
-        // console.log(enemy.color);
-      }
-      enemy.hitEffect.drawElement(ctx);
+      drawHitEffect(ctx, this.hitEffect, enemy);
     }
     Bullet.bullets.forEach((bullet) => {
       bullet.x += bullet.speed;
