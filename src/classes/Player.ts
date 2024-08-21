@@ -10,10 +10,6 @@ import getDistance from '../helpers/getDistance';
 import Bullet from './Bullet';
 import HitEffect from './HitEffect';
 
-let timer = 0;
-let growFactor = 1.01;
-let opacity = 1;
-
 class Player extends Figure {
   bulletColor: string;
   score: number;
@@ -43,6 +39,10 @@ class Player extends Figure {
       x: -1000,
       y: -1000,
       radius: this.radius,
+
+      timer: 0,
+      growFactor: 1.01,
+      opacity: 1,
     });
   }
 
@@ -104,23 +104,23 @@ class Player extends Figure {
     }
 
     if (enemy.hit) {
-      timer++;
+      enemy.hitEffect.timer++;
 
       enemy.hitEffect.x = enemy.x;
       enemy.hitEffect.y = enemy.y;
-      enemy.hitEffect.radius *= growFactor;
-      enemy.hitEffect.color = `rgba(150, 0, 0, ${opacity})`;
-      opacity -= 0.03;
-      growFactor += 0.005;
+      enemy.hitEffect.radius *= enemy.hitEffect.growFactor;
+      enemy.hitEffect.color = `rgba(150, 0, 0, ${enemy.hitEffect.opacity})`;
+      enemy.hitEffect.opacity -= 0.03;
+      enemy.hitEffect.growFactor += 0.005;
 
-      if (timer > 28) {
-        opacity = 1;
+      if (enemy.hitEffect.timer > 28) {
+        enemy.hitEffect.opacity = 1;
         enemy.hitEffect.x = -1000;
         enemy.hitEffect.y = -1000;
         enemy.hitEffect.radius = enemy.radius;
-        timer = 0;
+        enemy.hitEffect.timer = 0;
         enemy.hit = false;
-        growFactor = 1.01;
+        enemy.hitEffect.growFactor = 1.01;
         // console.log(enemy.color);
       }
       enemy.hitEffect.drawElement(ctx);

@@ -38,4 +38,7 @@ type PlayerOptions = FigureOptions & {
 
 type HitEffectOptions = Omit<FigureOptions, 'speed'> & {
   radius: number;
+  timer: 0;
+  growFactor: 1.01;
+  opacity: 1;
 };
