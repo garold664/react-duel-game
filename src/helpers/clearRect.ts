@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from './constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../data/constants';
 
 function clearRect(ctx: CanvasRenderingContext2D | null) {
   if (!ctx) return;

@@ -1,4 +1,4 @@
-import { MOUSE_THROTTLE_DELAY } from './constants';
+import { MOUSE_THROTTLE_DELAY } from '../data/constants';
 import throttle from './throttle';
 
 export const updateMouseCoordsOnMouseLeave = (

@@ -1,7 +1,7 @@
 import { memo, useCallback, useRef, useState } from 'react';
 import Range from './Range';
 import Player from '../classes/Player';
-import { RANGE_ONCHANGE_DEBOUNCE_DELAY } from '../helpers/constants';
+import { RANGE_ONCHANGE_DEBOUNCE_DELAY } from '../data/constants';
 
 interface PlayerControlsProps {
   player: Player;

@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../helpers/constants';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../data/constants';
 import '../App.css';
 
 import { player1, player2 } from '../helpers/players';

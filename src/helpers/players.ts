@@ -6,7 +6,7 @@ import {
   PLAYER2_COLOR,
   PLAYER_RADIUS,
   PLAYERS_GAP,
-} from './constants';
+} from '../data/constants';
 
 export const player1 = new Player({
   name: 'player1',

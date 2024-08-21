@@ -1,5 +1,5 @@
 import Figure from '../classes/Figure';
-import { PLAYER_RADIUS } from './constants';
+import { PLAYER_RADIUS } from '../data/constants';
 
 function showMenu(
   setMenuState: React.Dispatch<React.SetStateAction<boolean>>,

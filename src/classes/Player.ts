@@ -5,7 +5,7 @@ import {
   BULLET_SPEED1,
   BULLET_SPEED2,
   CANVAS_WIDTH,
-} from '../helpers/constants';
+} from '../data/constants';
 import getDistance from '../helpers/getDistance';
 import Bullet from './Bullet';
 import HitEffect from './HitEffect';

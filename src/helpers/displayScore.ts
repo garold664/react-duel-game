@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, PLAYER1_COLOR, PLAYER2_COLOR } from './constants';
+import { CANVAS_WIDTH, PLAYER1_COLOR, PLAYER2_COLOR } from '../data/constants';
 
 async function displayScore(
   score: number,
